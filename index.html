@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BrandScale&#174; &#8212; Sites & SaaS que escalam marcas</title>
+<meta name="description" content="BrandScale &#8212; est&#250;dio digital de cria&#231;&#227;o de sites e SaaS premium.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --paper: #f4f3ef;
+    --ink: #111111;
+    --mut: #6b6b66;
+    --line: #d8d6cf;
+    --navy: #0c111c;      /* fundo da logo */
+    --blue: #a9c7f0;      /* azul-claro da logo (para fundos escuros) */
+    --blue-deep: #5f8ede; /* azul ajustado para legibilidade em fundo claro */
+    --cream: #f2efe9;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Helvetica Neue", Helvetica, "Inter", -apple-system, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden; /* liberado ap\0000f3 s o intro */
+  }
+  body.ready { overflow: auto; }
+  ::selection { background: var(--ink); color: var(--paper); }
+
+  /* ============ INTRO \002014  part\0000ed culas ============ */
+  #intro {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: var(--navy);
+    opacity: 1;
+    transition: opacity 1.2s ease;
+  }
+  #intro.out { opacity: 0; pointer-events: none; }
+  #fx { position: absolute; inset: 0; width: 100vw; height: 100vh; display: block; cursor: crosshair; }
+
+  /* ============ SITE ============ */
+  .wrap { padding: 0 4vw; }
+
+  /* header */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 4vw;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .logo { font-weight: 700; font-size: 16px; letter-spacing: -0.02em; display: flex; align-items: center; gap: 9px; }
+  .logo .scale { color: var(--blue-deep); }
+  .logo svg { color: var(--blue-deep); flex-shrink: 0; }
+  .logo sup { font-size: 9px; vertical-align: super; }
+  nav { display: flex; gap: 28px; }
+  nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    position: relative;
+  }
+  nav a::after {
+    content: "";
+    position: absolute;
+    left: 0; bottom: -4px;
+    width: 0; height: 1px;
+    background: var(--ink);
+    transition: width .3s ease;
+  }
+  nav a:hover::after { width: 100%; }
+  .cta {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 10px 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform .25s ease;
+    white-space: nowrap;
+  }
+  .cta:hover { transform: scale(1.05); }
+  @media (max-width: 760px) { nav { display: none; } }
+
+  /* hero */
+  .hero { padding: 12vh 4vw 8vh; position: relative; overflow: hidden; min-height: 92vh; display: flex; flex-direction: column; justify-content: center; }
+  #hillsfx { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+  .hero > *:not(#hillsfx) { position: relative; z-index: 1; }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--mut);
+    margin-bottom: 4vh;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  h1 {
+    font-size: clamp(52px, 12.5vw, 190px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  h1 .thin { font-weight: 200; }
+  h1 .reg { position: relative; }
+  h1 .reg sup { font-size: 0.18em; font-weight: 400; letter-spacing: 0; vertical-align: 2.6em; color: var(--blue-deep); }
+  .hero-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    margin-top: 7vh;
+    flex-wrap: wrap;
+  }
+  .hero-foot p { max-width: 380px; font-size: 15px; line-height: 1.55; color: var(--mut); }
+  .hero-foot .down { font-size: 26px; color: var(--blue-deep); }
+
+  /* marquee */
+  .marquee {
+    background: var(--ink);
+    color: var(--paper);
+    overflow: hidden;
+    padding: 14px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+  .mq-inner {
+    display: flex;
+    width: max-content;
+    animation: mq 22s linear infinite;
+  }
+  .mq-inner span {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    padding-right: 48px;
+  }
+  @keyframes mq { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* se\0000e7 \0000f5 es */
+  section { padding: 12vh 4vw; }
+  .sec-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--mut);
+    margin-bottom: 5vh;
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+  }
+  .sec-label::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+  h2 {
+    font-size: clamp(34px, 6.5vw, 96px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  h2 em { font-style: normal; font-weight: 200; color: var(--blue-deep); }
+  .manifesto p {
+    max-width: 640px;
+    font-size: clamp(17px, 2vw, 24px);
+    line-height: 1.5;
+    margin-top: 4vh;
+    color: var(--ink);
+  }
+  .manifesto p b { font-weight: 600; }
+
+  /* servi\0000e7 os \002014  linhas numeradas */
+  .rows { border-top: 1px solid var(--ink); }
+  .row {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: baseline;
+    gap: 20px;
+    padding: 34px 8px;
+    border-bottom: 1px solid var(--ink);
+    text-decoration: none;
+    color: var(--ink);
+    transition: background .25s ease, color .25s ease, padding-left .25s ease;
+    cursor: pointer;
+  }
+  .row:hover { background: var(--ink); color: var(--paper); padding-left: 22px; }
+  .row .num { font-size: 13px; font-weight: 400; letter-spacing: 0.1em; }
+  .row .title {
+    font-size: clamp(26px, 4.6vw, 64px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .row.proc { align-items: flex-start; }
+  .row .tw { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .row .rsub {
+    font-size: 14px; font-weight: 400; line-height: 1.55;
+    letter-spacing: 0; text-transform: none;
+    color: inherit; opacity: .62; max-width: 560px;
+  }
+  .row .meta { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: inherit; opacity: .6; white-space: nowrap; }
+  @media (max-width: 700px) { .row { grid-template-columns: 44px 1fr; } .row .meta { display: none; } }
+
+  /* stats */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    border-top: 1px solid var(--ink);
+    border-left: 1px solid var(--ink);
+  }
+  .stat {
+    border-right: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 34px 26px 30px;
+  }
+  .stat .n { font-size: clamp(44px, 6vw, 84px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; }
+  .stat .l { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); margin-top: 12px; line-height: 1.5; }
+
+  /* pesos \002014  homenagem ao espec\0000ed men */
+  .weights div {
+    font-size: clamp(30px, 5.4vw, 74px);
+    line-height: 1.18;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .weights div small {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--mut);
+    font-weight: 400;
+    margin-right: 18px;
+    vertical-align: middle;
+  }
+
+  /* cta final \002014  bloco escuro com espiral */
+  .final {
+    text-align: center;
+    padding: 18vh 4vw 14vh;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: #060709;
+    color: var(--cream);
+  }
+  .final .credits {
+    position: absolute;
+    left: 4vw; right: 4vw; bottom: 22px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--cream) 40%, transparent);
+    z-index: 1;
+  }
+  .final .credits a { color: color-mix(in srgb, var(--cream) 60%, transparent); text-decoration: none; }
+  .final .credits a:hover { color: var(--cream); }
+  .final > *:not(.spiral):not(.credits) { position: relative; z-index: 1; }
+  .spiral {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 0;
+    opacity: 0.55;
+  }
+  .final .sec-label { color: color-mix(in srgb, var(--cream) 55%, transparent); }
+  .final .sec-label::after { background: color-mix(in srgb, var(--cream) 18%, transparent); }
+  .final h2 { font-size: clamp(48px, 11vw, 170px); text-transform: uppercase; text-shadow: 0 0 60px rgba(0,0,0,.8); }
+  .final a.big {
+    display: inline-block;
+    align-self: center;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    margin-top: 5vh;
+    font-size: clamp(16px, 2.4vw, 28px);
+    color: var(--cream);
+    text-decoration: none;
+    border-bottom: 2px solid var(--blue);
+    padding-bottom: 4px;
+    transition: opacity .25s;
+  }
+  .final a.big:hover { opacity: .65; }
+
+  /* footer */
+  footer { background: var(--navy); color: var(--cream); padding: 10vh 4vw 4vh; }
+  .foot-diamond { display: flex; justify-content: center; margin-bottom: 5vh; color: var(--blue); }
+  .foot-brand {
+    font-size: clamp(60px, 14.5vw, 230px);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 0.85;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 8vh;
+  }
+  .foot-brand .scale { color: var(--blue); }
+  .foot-brand sup { font-size: 0.14em; font-weight: 400; vertical-align: 3.2em; color: var(--blue); }
+  .foot-links {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--cream) 55%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--cream) 18%, transparent);
+    padding-top: 3vh;
+  }
+  .foot-links a { color: var(--blue); text-decoration: none; }
+  .foot-links a:hover { text-decoration: underline; }
+
+  /* ===== efeitos tipogr\0000e1 ficos (inspira\0000e7 \0000e3 o neuemontreal) ===== */
+  /* 1. hero: linhas sobem em m\0000e1 scara, escalonadas */
+  h1 .mask { display: block; overflow: hidden; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+  h1 .li { display: block; transform: translateY(118%); transition: transform 1s cubic-bezier(.16, 1, .3, 1); }
+  h1 .mask:nth-child(1) .li { transition-delay: .15s; }
+  h1 .mask:nth-child(2) .li { transition-delay: .28s; }
+  h1 .mask:nth-child(3) .li { transition-delay: .41s; }
+  body.ready h1 .li { transform: translateY(0); }
+
+  /* 2. manifesto: palavras tingem com o scroll */
+  .manifesto p .w { color: #bdbbb2; transition: color .3s ease; }
+  .manifesto p .w.on { color: var(--ink); }
+
+  /* 3. cursor-ponto que reage a links (invis\0000ed vel no toque) */
+  .cursor {
+    position: fixed; left: 0; top: 0;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #fff; mix-blend-mode: difference;
+    pointer-events: none; z-index: 300;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: width .25s ease, height .25s ease, opacity .3s ease;
+  }
+  .cursor.on { opacity: 1; }
+  .cursor.big { width: 46px; height: 46px; }
+  @media (pointer: coarse) { .cursor { display: none; } }
+
+  /* 4. pesos: resposta ao hover */
+  .weights div { transition: letter-spacing .35s ease, color .35s ease, padding-left .35s ease; cursor: default; }
+  .weights div:hover { letter-spacing: .015em; color: var(--blue-deep); padding-left: 14px; }
+  .weights div:hover small { color: var(--ink); }
+
+  /* 5. marquee: enverga com a velocidade do scroll (transform via JS) */
+  .marquee { will-change: transform; }
+
+  @media (prefers-reduced-motion: reduce) {
+    h1 .li { transform: none; transition: none; }
+    .manifesto p .w { color: var(--ink); transition: none; }
+    .cursor { display: none; }
+  }
+
+  /* ===== pacote 2 de efeitos ===== */
+  /* barra de progresso de leitura */
+  #scrollbarFx {
+    position: fixed; top: 0; left: 0; height: 2px; width: 0;
+    background: var(--blue-deep); z-index: 60;
+    opacity: 0; transition: opacity .4s ease;
+  }
+  body.ready #scrollbarFx { opacity: 1; }
+
+  /* letras interativas do "VAMOS ESCALAR?" */
+  .final h2 .ltr { display: inline-block; transition: transform .35s cubic-bezier(.16, 1, .3, 1), color .35s ease; }
+  .final h2 .ltr:hover { transform: translateY(-0.09em) rotate(-3deg); color: var(--blue); }
+
+  /* n\0000fa meros dos stats ficam tabulares para contar sem tremer */
+  .stat .n { font-variant-numeric: tabular-nums; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .final h2 .ltr { transition: none; }
+  }
+
+  /* cart\0000e3 o de preview dos trabalhos (segue o cursor) */
+  .work-pv {
+    position: fixed;
+    width: 230px; height: 156px;
+    border-radius: 14px;
+    pointer-events: none;
+    z-index: 90;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.7) rotate(4deg);
+    transition: opacity .25s ease, transform .35s cubic-bezier(.16, 1, .3, 1);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 52px; letter-spacing: -0.02em;
+    box-shadow: 0 24px 60px -18px rgba(0, 0, 0, .45);
+  }
+  .work-pv.on { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(-3deg); }
+  @media (pointer: coarse), (prefers-reduced-motion: reduce) { .work-pv { display: none; } }
+
+  /* aviso "mensagem copiada" ao abrir o direct */
+  .copy-toast {
+    position: fixed;
+    bottom: 28px; left: 50%;
+    transform: translate(-50%, 16px);
+    background: var(--ink); color: var(--paper);
+    font-size: 12px; font-weight: 500; letter-spacing: .06em;
+    padding: 13px 22px; border-radius: 999px;
+    opacity: 0; transition: opacity .35s ease, transform .35s ease;
+    z-index: 150; pointer-events: none;
+    box-shadow: 0 12px 30px -8px rgba(0,0,0,.35);
+  }
+  .copy-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+  /* reveal on scroll */
+  [data-rv] { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+  [data-rv].in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    [data-rv] { opacity: 1; transform: none; transition: none; }
+    .mq-inner { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ INTRO ============ -->
+<div id="intro"><canvas id="fx" aria-label="Part&#237;culas formando o nome BrandScale"></canvas></div>
+
+<!-- ============ SITE ============ -->
+<div class="cursor" id="cursorDot" aria-hidden="true"></div>
+<div id="scrollbarFx" aria-hidden="true"></div>
+<div class="work-pv" id="workPv" aria-hidden="true"></div>
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><g transform="rotate(45 12 12)"><rect x="4.5" y="4.5" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="9.2" y="9.2" width="5.6" height="5.6" fill="currentColor"/></g></svg>
+    <span>Brand<span class="scale">Scale</span><sup>&#174;</sup></span>
+  </div>
+  <nav>
+    <a href="#servicos">Servi&#231;os</a>
+    <a href="#processo">Processo</a>
+    <a href="#estudio">Est&#250;dio</a>
+    <a href="#contato">Contato</a>
+  </nav>
+  <a class="cta" href="https://ig.me/m/brandscale76" target="_blank" rel="noopener" data-dm>Iniciar projeto &#8599;</a>
+</header>
+
+<section class="hero" id="inicio">
+  <canvas id="hillsfx" aria-hidden="true"></canvas>
+  <div class="eyebrow" data-rv><span>Est&#250;dio digital &#8212; Brasil</span><span>Est. 2026</span><span>Sites &#183; SaaS &#183; Branding</span></div>
+  <h1 aria-label="Sites e SaaS que escalam marcas">
+    <span class="mask"><span class="li">Sites <span class="thin">&amp;</span> SaaS</span></span>
+    <span class="mask"><span class="li">que escalam</span></span>
+    <span class="mask"><span class="li"><span class="reg">marcas<sup>&#174;</sup></span></span></span>
+  </h1>
+  <div class="hero-foot" data-rv>
+    <p>Criamos produtos digitais premium &#8212; do site institucional ao SaaS completo. Desenhado, constru&#237;do e publicado por um s&#243; est&#250;dio.</p>
+    <div class="down">&#8595;</div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="mq-inner">
+    <span>Sites institucionais</span><span>&#8212;</span><span>SaaS &amp; produtos</span><span>&#8212;</span><span>Design premium</span><span>&#8212;</span><span>Automa&#231;&#227;o</span><span>&#8212;</span><span>Landing pages</span><span>&#8212;</span>
+    <span>Sites institucionais</span><span>&#8212;</span><span>SaaS &amp; produtos</span><span>&#8212;</span><span>Design premium</span><span>&#8212;</span><span>Automa&#231;&#227;o</span><span>&#8212;</span><span>Landing pages</span><span>&#8212;</span>
+  </div>
+</div>
+
+<section class="manifesto" id="estudio">
+  <div class="sec-label">Manifesto</div>
+  <h2 data-rv>Criado, refinado,<br><em>escalado.</em></h2>
+  <p data-rv id="manifestoP">A BrandScale nasceu de uma convic&#231;&#227;o: <b>software bonito vende mais.</b> Cada projeto sai do papel com a obsess&#227;o de parecer &#8212; e funcionar &#8212; como um produto de milh&#245;es, seja um site de uma p&#225;gina ou uma plataforma inteira.</p>
+</section>
+
+<section id="servicos">
+  <div class="sec-label">Servi&#231;os</div>
+  <div class="rows" data-rv>
+    <div class="row"><span class="num">01</span><span class="title">Sites institucionais</span><span class="meta">Do briefing ao ar em dias</span></div>
+    <div class="row"><span class="num">02</span><span class="title">SaaS &amp; produtos</span><span class="meta">Do prot&#243;tipo ao produto</span></div>
+    <div class="row"><span class="num">03</span><span class="title">Design premium</span><span class="meta">Identidade que converte</span></div>
+    <div class="row"><span class="num">04</span><span class="title">Automa&#231;&#227;o</span><span class="meta">Produtos que trabalham 24/7</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-label">Em n&#250;meros</div>
+  <div class="stats" data-rv>
+    <div class="stat"><div class="n">100%</div><div class="l">Design e c&#243;digo pr&#243;prios, sem templates</div></div>
+    <div class="stat"><div class="n">20+</div><div class="l">Telas por produto entregue</div></div>
+    <div class="stat"><div class="n">7d</div><div class="l">Do briefing &#224; primeira vers&#227;o no ar</div></div>
+    <div class="stat"><div class="n">24/7</div><div class="l">Produtos que trabalham sem parar</div></div>
+  </div>
+</section>
+
+<section id="processo">
+  <div class="sec-label">Processo</div>
+  <h2 data-rv style="margin-bottom:6vh;">Do briefing ao ar<br>em <em>sete dias.</em></h2>
+  <div class="rows" data-rv id="workRows">
+    <div class="row proc" data-pv="0c111c|a9c7f0|01">
+      <span class="num">01</span>
+      <span class="tw"><span class="title">Descoberta</span><span class="rsub">Uma conversa profunda sobre a sua marca, o seu p&#250;blico e o que o site precisa conquistar. Sa&#237;mos com o mapa do projeto pronto.</span></span>
+      <span class="meta">Dia 1</span>
+    </div>
+    <div class="row proc" data-pv="101b16|7fe0b0|02">
+      <span class="num">02</span>
+      <span class="tw"><span class="title">Dire&#231;&#227;o visual</span><span class="rsub">Tipografia, cores, efeitos e prot&#243;tipo naveg&#225;vel &#8212; voc&#234; v&#234; e sente o site antes de uma linha ir ao ar.</span></span>
+      <span class="meta">Dias 2&#8211;3</span>
+    </div>
+    <div class="row proc" data-pv="14100e|c9a24b|03">
+      <span class="num">03</span>
+      <span class="tw"><span class="title">Constru&#231;&#227;o</span><span class="rsub">Design vira c&#243;digo pr&#243;prio: leve, r&#225;pido, responsivo e com as microintera&#231;&#245;es que fazem parecer caro &#8212; porque &#233;.</span></span>
+      <span class="meta">Dias 4&#8211;6</span>
+    </div>
+    <a class="row proc" href="https://ig.me/m/brandscale76" target="_blank" rel="noopener" data-dm data-pv="060709|f2efe9|04">
+      <span class="num">04</span>
+      <span class="tw"><span class="title">Lan&#231;amento</span><span class="rsub">Dom&#237;nio, publica&#231;&#227;o, ajustes finos e entrega das chaves. Seu site no ar &#8212; e n&#243;s a uma mensagem de dist&#226;ncia. &#8599;</span></span>
+      <span class="meta">Dia 7</span>
+    </a>
+  </div>
+</section>
+
+<section class="weights" aria-label="A marca em todos os pesos">
+  <div class="sec-label">Uma marca, todos os pesos</div>
+  <div data-rv style="font-weight:100;"><small>Hairline</small>BrandScale</div>
+  <div data-rv style="font-weight:200;"><small>Extralight</small>BrandScale</div>
+  <div data-rv style="font-weight:300;"><small>Light</small>BrandScale</div>
+  <div data-rv style="font-weight:400;"><small>Regular</small>BrandScale</div>
+  <div data-rv style="font-weight:500;"><small>Medium</small>BrandScale</div>
+  <div data-rv style="font-weight:600;"><small>Semibold</small>BrandScale</div>
+  <div data-rv style="font-weight:700;"><small>Bold</small>BrandScale</div>
+  <div data-rv style="font-weight:800;"><small>Extrabold</small>BrandScale</div>
+  <div data-rv style="font-weight:900;"><small>Black</small>BrandScale</div>
+</section>
+
+<section class="final" id="contato">
+  <canvas class="spiral" id="spiralfx" aria-hidden="true"></canvas>
+  <div class="sec-label" style="justify-content:center;">Pr&#243;ximo passo</div>
+  <h2 data-rv>Vamos<br>escalar?</h2>
+  <a class="big" href="https://ig.me/m/brandscale76" target="_blank" rel="noopener" data-dm data-rv>@brandscale76</a>
+  <div class="credits">
+    <span>&#169; 2026 BrandScale</span>
+    <a href="#inicio">Voltar ao topo &#8593;</a>
+    <span>Sites &#183; SaaS &#183; Branding</span>
+  </div>
+</section>
+
+
+
+<script>
+/* ============ INTRO \u2014 ParticleTextEffect (port do componente React, 21st.dev/KAINXU) ============ */
+(function () {
+  "use strict";
+
+  const WORDS = ["BRANDSCALE"];
+  const PIXEL_STEPS = 6;
+  const DRAW_AS_POINTS = true;
+  const INTRO_MS = 6500;
+
+  const canvas = document.getElementById("fx");
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const mouse = { x: 0, y: 0, isPressed: false, isRightClick: false };
+  const particles = [];
+  let frameCount = 0;
+  let wordIndex = 0;
+  let stopped = false;
+
+  function generateRandomPos(x, y, mag) {
+    const randomX = Math.random() * canvas.width;
+    const randomY = Math.random() * canvas.height;
+    const dir = { x: randomX - x, y: randomY - y };
+    const m = Math.sqrt(dir.x * dir.x + dir.y * dir.y);
+    if (m > 0) { dir.x = dir.x / m * mag; dir.y = dir.y / m * mag; }
+    return { x: x + dir.x, y: y + dir.y };
+  }
+
+  class Particle {
+    constructor() {
+      this.pos = { x: 0, y: 0 };
+      this.vel = { x: 0, y: 0 };
+      this.acc = { x: 0, y: 0 };
+      this.target = { x: 0, y: 0 };
+      this.closeEnoughTarget = 100;
+      this.maxSpeed = 1.0;
+      this.maxForce = 0.1;
+      this.particleSize = 10;
+      this.isKilled = false;
+      this.startColor = { r: 0, g: 0, b: 0 };
+      this.targetColor = { r: 0, g: 0, b: 0 };
+      this.colorWeight = 0;
+      this.colorBlendRate = 0.01;
+    }
+
+    move() {
+      let proximityMult = 1;
+      const distance = Math.sqrt(Math.pow(this.pos.x - this.target.x, 2) + Math.pow(this.pos.y - this.target.y, 2));
+      if (distance < this.closeEnoughTarget) proximityMult = distance / this.closeEnoughTarget;
+
+      const towardsTarget = { x: this.target.x - this.pos.x, y: this.target.y - this.pos.y };
+      const magnitude = Math.sqrt(towardsTarget.x * towardsTarget.x + towardsTarget.y * towardsTarget.y);
+      if (magnitude > 0) {
+        towardsTarget.x = towardsTarget.x / magnitude * this.maxSpeed * proximityMult;
+        towardsTarget.y = towardsTarget.y / magnitude * this.maxSpeed * proximityMult;
+      }
+
+      const steer = { x: towardsTarget.x - this.vel.x, y: towardsTarget.y - this.vel.y };
+      const steerMagnitude = Math.sqrt(steer.x * steer.x + steer.y * steer.y);
+      if (steerMagnitude > 0) {
+        steer.x = steer.x / steerMagnitude * this.maxForce;
+        steer.y = steer.y / steerMagnitude * this.maxForce;
+      }
+
+      this.acc.x += steer.x; this.acc.y += steer.y;
+      this.vel.x += this.acc.x; this.vel.y += this.acc.y;
+      this.pos.x += this.vel.x; this.pos.y += this.vel.y;
+      this.acc.x = 0; this.acc.y = 0;
+    }
+
+    draw(ctx, drawAsPoints) {
+      if (this.colorWeight < 1.0) this.colorWeight = Math.min(this.colorWeight + this.colorBlendRate, 1.0);
+      const c = {
+        r: Math.round(this.startColor.r + (this.targetColor.r - this.startColor.r) * this.colorWeight),
+        g: Math.round(this.startColor.g + (this.targetColor.g - this.startColor.g) * this.colorWeight),
+        b: Math.round(this.startColor.b + (this.targetColor.b - this.startColor.b) * this.colorWeight),
+      };
+      ctx.fillStyle = "rgb(" + c.r + ", " + c.g + ", " + c.b + ")";
+      if (drawAsPoints) {
+        ctx.fillRect(this.pos.x, this.pos.y, 2, 2);
+      } else {
+        ctx.beginPath();
+        ctx.arc(this.pos.x, this.pos.y, this.particleSize / 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    kill(width, height) {
+      if (!this.isKilled) {
+        const randomPos = generateRandomPos(width / 2, height / 2, (width + height) / 2);
+        this.target.x = randomPos.x;
+        this.target.y = randomPos.y;
+        this.startColor = {
+          r: this.startColor.r + (this.targetColor.r - this.startColor.r) * this.colorWeight,
+          g: this.startColor.g + (this.targetColor.g - this.startColor.g) * this.colorWeight,
+          b: this.startColor.b + (this.targetColor.b - this.startColor.b) * this.colorWeight,
+        };
+        this.targetColor = { r: 0, g: 0, b: 0 };
+        this.colorWeight = 0;
+        this.isKilled = true;
+      }
+    }
+  }
+
+  function nextWord(word) {
+    const off = document.createElement("canvas");
+    off.width = canvas.width;
+    off.height = canvas.height;
+    const offCtx = off.getContext("2d");
+
+    const fontSize = Math.max(36, Math.min(canvas.width / 8.5, canvas.height / 3.2));
+    offCtx.fillStyle = "white";
+    offCtx.font = "bold " + Math.floor(fontSize) + "px Arial";
+    offCtx.textAlign = "center";
+    offCtx.textBaseline = "middle";
+    offCtx.fillText(word, canvas.width / 2, canvas.height * 0.60);
+
+    /* losango da logo acima do nome */
+    const ds = fontSize * 0.62;
+    offCtx.save();
+    offCtx.translate(canvas.width / 2, canvas.height * 0.60 - fontSize * 1.18);
+    offCtx.rotate(Math.PI / 4);
+    offCtx.lineWidth = ds * 0.15;
+    offCtx.strokeStyle = "white";
+    offCtx.strokeRect(-ds / 2, -ds / 2, ds, ds);
+    const ds2 = ds * 0.42;
+    offCtx.fillRect(-ds2 / 2, -ds2 / 2, ds2, ds2);
+    offCtx.restore();
+
+    const pixels = offCtx.getImageData(0, 0, canvas.width, canvas.height).data;
+
+    /* paleta da marca: azul-claro, creme e azul m\u00e9dio */
+    const BRAND = [
+      { r: 169, g: 199, b: 240 },
+      { r: 242, g: 239, b: 233 },
+      { r: 127, g: 168, b: 232 },
+    ];
+    const base = BRAND[Math.floor(Math.random() * BRAND.length)];
+    const jit = 14;
+    const newColor = {
+      r: Math.max(0, Math.min(255, base.r + (Math.random() - 0.5) * jit)),
+      g: Math.max(0, Math.min(255, base.g + (Math.random() - 0.5) * jit)),
+      b: Math.max(0, Math.min(255, base.b + (Math.random() - 0.5) * jit)),
+    };
+    let particleIndex = 0;
+
+    const coordsIndexes = [];
+    for (let i = 0; i < pixels.length; i += PIXEL_STEPS * 4) coordsIndexes.push(i);
+    for (let i = coordsIndexes.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = coordsIndexes[i]; coordsIndexes[i] = coordsIndexes[j]; coordsIndexes[j] = tmp;
+    }
+
+    for (const pixelIndex of coordsIndexes) {
+      const alpha = pixels[pixelIndex + 3];
+      if (alpha > 0) {
+        const x = (pixelIndex / 4) % canvas.width;
+        const y = Math.floor(pixelIndex / 4 / canvas.width);
+        let particle;
+
+        if (particleIndex < particles.length) {
+          particle = particles[particleIndex];
+          particle.isKilled = false;
+          particleIndex++;
+        } else {
+          particle = new Particle();
+          const randomPos = generateRandomPos(canvas.width / 2, canvas.height / 2, (canvas.width + canvas.height) / 2);
+          particle.pos.x = randomPos.x;
+          particle.pos.y = randomPos.y;
+          particle.maxSpeed = Math.random() * 6 + 4;
+          particle.maxForce = particle.maxSpeed * 0.05;
+          particle.particleSize = Math.random() * 6 + 6;
+          particle.colorBlendRate = Math.random() * 0.0275 + 0.0025;
+          particles.push(particle);
+        }
+
+        particle.startColor = {
+          r: particle.startColor.r + (particle.targetColor.r - particle.startColor.r) * particle.colorWeight,
+          g: particle.startColor.g + (particle.targetColor.g - particle.startColor.g) * particle.colorWeight,
+          b: particle.startColor.b + (particle.targetColor.b - particle.startColor.b) * particle.colorWeight,
+        };
+        particle.targetColor = newColor;
+        particle.colorWeight = 0;
+        particle.target.x = x;
+        particle.target.y = y;
+      }
+    }
+
+    for (let i = particleIndex; i < particles.length; i++) {
+      particles[i].kill(canvas.width, canvas.height);
+    }
+  }
+
+  function frame() {
+    if (stopped) return;
+    ctx.fillStyle = "rgba(12, 17, 28, 0.12)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.move();
+      p.draw(ctx, DRAW_AS_POINTS);
+      if (p.isKilled && (p.pos.x < 0 || p.pos.x > canvas.width || p.pos.y < 0 || p.pos.y > canvas.height)) {
+        particles.splice(i, 1);
+      }
+    }
+
+    if (mouse.isPressed && mouse.isRightClick) {
+      particles.forEach(function (p) {
+        const d = Math.sqrt(Math.pow(p.pos.x - mouse.x, 2) + Math.pow(p.pos.y - mouse.y, 2));
+        if (d < 50) p.kill(canvas.width, canvas.height);
+      });
+    }
+
+    frameCount++;
+    if (frameCount % 240 === 0) {
+      wordIndex = (wordIndex + 1) % WORDS.length;
+      nextWord(WORDS[wordIndex]);
+    }
+  }
+
+  let usingInterval = false;
+  function rafLoop() {
+    if (usingInterval || stopped) return;
+    frame();
+    requestAnimationFrame(rafLoop);
+  }
+
+  function canvasPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    mouse.x = (e.clientX - rect.left) * (canvas.width / rect.width);
+    mouse.y = (e.clientY - rect.top) * (canvas.height / rect.height);
+  }
+
+  canvas.addEventListener("mousedown", function (e) {
+    mouse.isPressed = true;
+    mouse.isRightClick = e.button === 2;
+    canvasPos(e);
+  });
+  canvas.addEventListener("mouseup", function () { mouse.isPressed = false; mouse.isRightClick = false; });
+  canvas.addEventListener("mousemove", canvasPos);
+  canvas.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+  canvas.addEventListener("touchstart", function (e) {
+    mouse.isPressed = true; mouse.isRightClick = true;
+    canvasPos(e.touches[0]); e.preventDefault();
+  }, { passive: false });
+  canvas.addEventListener("touchmove", function (e) { canvasPos(e.touches[0]); e.preventDefault(); }, { passive: false });
+  canvas.addEventListener("touchend", function () { mouse.isPressed = false; mouse.isRightClick = false; });
+
+  nextWord(WORDS[0]);
+  requestAnimationFrame(rafLoop);
+  setTimeout(function () {
+    if (frameCount === 0 && !stopped) {
+      usingInterval = true;
+      let last = performance.now();
+      setInterval(function () {
+        if (stopped) return;
+        const now = performance.now();
+        let steps = Math.min(120, Math.floor((now - last) / (1000 / 60)));
+        if (steps > 0) last = now;
+        while (steps-- > 0) frame();
+      }, 1000 / 60);
+    }
+  }, 600);
+
+  /* transi\u00e7\u00e3o direta: intro -> site */
+  window.enterSite = function () {
+    if (document.body.classList.contains("ready")) return;
+    document.body.classList.add("ready");
+    document.getElementById("intro").classList.add("out");
+    revealInit();
+    window.startSpiral();
+    window.startHills();
+    window.startTypeFx();
+    window.startMoreFx();
+    setTimeout(function () {
+      stopped = true;
+      document.getElementById("intro").style.display = "none";
+      particles.length = 0;
+    }, 1300);
+  };
+  setTimeout(window.enterSite, INTRO_MS);
+})();
+
+/* ============ ESPIRAL P&B \u2014 port do ShaderAnimation (21st.dev) para WebGL puro, sem three.js ============ */
+window.startSpiral = (function () {
+  let started = false;
+  return function () {
+    if (started) return; started = true;
+    const canvas = document.getElementById("spiralfx");
+    const host = canvas.parentElement;
+    const gl = canvas.getContext("webgl", { antialias: true, powerPreference: "high-performance" });
+    if (!gl) return; /* sem WebGL: a se\u00e7\u00e3o fica escura e elegante mesmo assim */
+
+    const vsrc = "attribute vec2 p; void main(){ gl_Position = vec4(p, 0.0, 1.0); }";
+    const fsrc = [
+      "precision highp float;",
+      "uniform vec2 resolution;",
+      "uniform float time;",
+      "void main(void){",
+      "  vec2 uv = (gl_FragCoord.xy * 2.0 - resolution.xy) / min(resolution.x, resolution.y);",
+      "  float t = time*0.05;",
+      "  float lineWidth = 0.003;",
+      "  float radius = length(uv);",
+      "  float angle = atan(uv.y, uv.x);",
+      "  float total_intensity = 0.0;",
+      "  for(int i=0; i<5; i++){",
+      "    float spiral_pattern = radius * 2.0 + angle * 0.5;",
+      "    total_intensity += lineWidth*float(i*i) / abs(fract(t + float(i)*0.02)*5.0 - spiral_pattern + mod(uv.x+uv.y, 0.2));",
+      "  }",
+      "  /* preto e branco: intensidade vira luz monocromatica */",
+      "  gl_FragColor = vec4(vec3(total_intensity), 1.0);",
+      "}",
+    ].join("\n");
+
+    function compile(type, src) {
+      const sh = gl.createShader(type);
+      gl.shaderSource(sh, src);
+      gl.compileShader(sh);
+      return sh;
+    }
+    const prog = gl.createProgram();
+    gl.attachShader(prog, compile(gl.VERTEX_SHADER, vsrc));
+    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, fsrc));
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
+
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(prog, "p");
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+    const uRes = gl.getUniformLocation(prog, "resolution");
+    const uTime = gl.getUniformLocation(prog, "time");
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = Math.max(1, Math.floor(host.clientWidth * dpr));
+      const h = Math.max(1, Math.floor(host.clientHeight * dpr));
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w; canvas.height = h;
+        gl.viewport(0, 0, w, h);
+      }
+      gl.uniform2f(uRes, canvas.width, canvas.height);
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    let t = 1.0, frames = 0;
+    function render() {
+      frames++;
+      /* s\u00f3 desenha quando a se\u00e7\u00e3o est\u00e1 vis\u00edvel */
+      const r = host.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) return;
+      t += 0.05;
+      gl.uniform1f(uTime, t);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
+
+    let usingInterval = false;
+    function rafLoop() {
+      if (usingInterval) return;
+      render();
+      requestAnimationFrame(rafLoop);
+    }
+    requestAnimationFrame(rafLoop);
+    setTimeout(function () {
+      if (frames === 0) {
+        usingInterval = true;
+        setInterval(render, 1000 / 60);
+      }
+    }, 600);
+  };
+})();
+
+/* ============ GLSL HILLS \u2014 port do componente React (21st.dev) para WebGL puro, sem three.js ============ */
+window.startHills = (function () {
+  let started = false;
+  return function () {
+    if (started) return; started = true;
+    const canvas = document.getElementById("hillsfx");
+    const host = canvas.parentElement;
+    const gl = canvas.getContext("webgl", { alpha: true, antialias: false });
+    if (!gl) return;
+
+    const NOISE = [
+      "vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }",
+      "vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }",
+      "vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }",
+      "vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }",
+      "vec3 fade(vec3 t) { return t*t*t*(t*(t*6.0-15.0)+10.0); }",
+      "float cnoise(vec3 P) {",
+      "  vec3 Pi0 = floor(P); vec3 Pi1 = Pi0 + vec3(1.0);",
+      "  Pi0 = mod289(Pi0); Pi1 = mod289(Pi1);",
+      "  vec3 Pf0 = fract(P); vec3 Pf1 = Pf0 - vec3(1.0);",
+      "  vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);",
+      "  vec4 iy = vec4(Pi0.yy, Pi1.yy);",
+      "  vec4 iz0 = Pi0.zzzz; vec4 iz1 = Pi1.zzzz;",
+      "  vec4 ixy = permute(permute(ix) + iy);",
+      "  vec4 ixy0 = permute(ixy + iz0); vec4 ixy1 = permute(ixy + iz1);",
+      "  vec4 gx0 = ixy0 * (1.0 / 7.0);",
+      "  vec4 gy0 = fract(floor(gx0) * (1.0 / 7.0)) - 0.5;",
+      "  gx0 = fract(gx0);",
+      "  vec4 gz0 = vec4(0.5) - abs(gx0) - abs(gy0);",
+      "  vec4 sz0 = step(gz0, vec4(0.0));",
+      "  gx0 -= sz0 * (step(0.0, gx0) - 0.5);",
+      "  gy0 -= sz0 * (step(0.0, gy0) - 0.5);",
+      "  vec4 gx1 = ixy1 * (1.0 / 7.0);",
+      "  vec4 gy1 = fract(floor(gx1) * (1.0 / 7.0)) - 0.5;",
+      "  gx1 = fract(gx1);",
+      "  vec4 gz1 = vec4(0.5) - abs(gx1) - abs(gy1);",
+      "  vec4 sz1 = step(gz1, vec4(0.0));",
+      "  gx1 -= sz1 * (step(0.0, gx1) - 0.5);",
+      "  gy1 -= sz1 * (step(0.0, gy1) - 0.5);",
+      "  vec3 g000 = vec3(gx0.x,gy0.x,gz0.x); vec3 g100 = vec3(gx0.y,gy0.y,gz0.y);",
+      "  vec3 g010 = vec3(gx0.z,gy0.z,gz0.z); vec3 g110 = vec3(gx0.w,gy0.w,gz0.w);",
+      "  vec3 g001 = vec3(gx1.x,gy1.x,gz1.x); vec3 g101 = vec3(gx1.y,gy1.y,gz1.y);",
+      "  vec3 g011 = vec3(gx1.z,gy1.z,gz1.z); vec3 g111 = vec3(gx1.w,gy1.w,gz1.w);",
+      "  vec4 norm0 = taylorInvSqrt(vec4(dot(g000,g000), dot(g010,g010), dot(g100,g100), dot(g110,g110)));",
+      "  g000 *= norm0.x; g010 *= norm0.y; g100 *= norm0.z; g110 *= norm0.w;",
+      "  vec4 norm1 = taylorInvSqrt(vec4(dot(g001,g001), dot(g011,g011), dot(g101,g101), dot(g111,g111)));",
+      "  g001 *= norm1.x; g011 *= norm1.y; g101 *= norm1.z; g111 *= norm1.w;",
+      "  float n000 = dot(g000, Pf0);",
+      "  float n100 = dot(g100, vec3(Pf1.x, Pf0.yz));",
+      "  float n010 = dot(g010, vec3(Pf0.x, Pf1.y, Pf0.z));",
+      "  float n110 = dot(g110, vec3(Pf1.xy, Pf0.z));",
+      "  float n001 = dot(g001, vec3(Pf0.xy, Pf1.z));",
+      "  float n101 = dot(g101, vec3(Pf1.x, Pf0.y, Pf1.z));",
+      "  float n011 = dot(g011, vec3(Pf0.x, Pf1.yz));",
+      "  float n111 = dot(g111, Pf1);",
+      "  vec3 fade_xyz = fade(Pf0);",
+      "  vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);",
+      "  vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);",
+      "  float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);",
+      "  return 2.2 * n_xyz;",
+      "}",
+    ].join("\n");
+
+    const vsrc = [
+      "attribute vec3 position;",
+      "uniform mat4 projectionMatrix;",
+      "uniform mat4 modelViewMatrix;",
+      "uniform float time;",
+      "varying vec3 vPosition;",
+      "mat4 rotateMatrixX(float radian) {",
+      "  return mat4(1.0,0.0,0.0,0.0, 0.0,cos(radian),-sin(radian),0.0, 0.0,sin(radian),cos(radian),0.0, 0.0,0.0,0.0,1.0);",
+      "}",
+      NOISE,
+      "void main(void) {",
+      "  vec3 updatePosition = (rotateMatrixX(radians(90.0)) * vec4(position, 1.0)).xyz;",
+      "  float sin1 = sin(radians(updatePosition.x / 128.0 * 90.0));",
+      "  vec3 noisePosition = updatePosition + vec3(0.0, 0.0, time * -30.0);",
+      "  float noise1 = cnoise(noisePosition * 0.08);",
+      "  float noise2 = cnoise(noisePosition * 0.06);",
+      "  float noise3 = cnoise(noisePosition * 0.4);",
+      "  vec3 lastPosition = updatePosition + vec3(0.0,",
+      "    noise1 * sin1 * 8.0",
+      "    + noise2 * sin1 * 8.0",
+      "    + noise3 * (abs(sin1) * 2.0 + 0.5)",
+      "    + pow(sin1, 2.0) * 40.0, 0.0);",
+      "  vPosition = lastPosition;",
+      "  gl_Position = projectionMatrix * modelViewMatrix * vec4(lastPosition, 1.0);",
+      "}",
+    ].join("\n");
+
+    const fsrc = [
+      "precision highp float;",
+      "varying vec3 vPosition;",
+      "void main(void) {",
+      "  float opacity = (96.0 - length(vPosition)) / 256.0 * 0.6;",
+      "  vec3 color = vec3(0.35);", /* cinza-tinta sobre o papel */
+      "  gl_FragColor = vec4(color, opacity);",
+      "}",
+    ].join("\n");
+
+    function compile(type, src) {
+      const sh = gl.createShader(type);
+      gl.shaderSource(sh, src);
+      gl.compileShader(sh);
+      return sh;
+    }
+    const prog = gl.createProgram();
+    gl.attachShader(prog, compile(gl.VERTEX_SHADER, vsrc));
+    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, fsrc));
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+    gl.useProgram(prog);
+
+    /* malha 256\u00d7256 (128\u00d7128 sem suporte a \u00edndices de 32 bits) */
+    const ext = gl.getExtension("OES_element_index_uint");
+    const SEG = ext ? 256 : 128, SIZE = 256, step = SIZE / SEG, half = SIZE / 2;
+    const verts = new Float32Array((SEG + 1) * (SEG + 1) * 3);
+    let vi = 0;
+    for (let iy = 0; iy <= SEG; iy++) {
+      for (let ix = 0; ix <= SEG; ix++) {
+        verts[vi++] = -half + ix * step;
+        verts[vi++] = half - iy * step;
+        verts[vi++] = 0;
+      }
+    }
+    const IndexArray = ext ? Uint32Array : Uint16Array;
+    const idx = new IndexArray(SEG * SEG * 6);
+    let ii = 0;
+    for (let iy = 0; iy < SEG; iy++) {
+      for (let ix = 0; ix < SEG; ix++) {
+        const a = iy * (SEG + 1) + ix, b = a + SEG + 1;
+        idx[ii++] = a; idx[ii++] = b; idx[ii++] = a + 1;
+        idx[ii++] = b; idx[ii++] = b + 1; idx[ii++] = a + 1;
+      }
+    }
+    const vbo = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+    gl.bufferData(gl.ARRAY_BUFFER, verts, gl.STATIC_DRAW);
+    const ibo = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, idx, gl.STATIC_DRAW);
+    const locPos = gl.getAttribLocation(prog, "position");
+    gl.enableVertexAttribArray(locPos);
+    gl.vertexAttribPointer(locPos, 3, gl.FLOAT, false, 0, 0);
+
+    /* c\u00e2mera: perspective(45\u00b0) em (0,16,125) olhando para (0,28,0) \u2014 como no componente */
+    function perspective(fovy, aspect, near, far) {
+      const f = 1 / Math.tan(fovy / 2), nf = 1 / (near - far);
+      return new Float32Array([f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, (far + near) * nf, -1, 0, 0, 2 * far * near * nf, 0]);
+    }
+    function lookAt(ex, ey, ez, cx, cy, cz) {
+      let zx = ex - cx, zy = ey - cy, zz = ez - cz;
+      let zl = Math.hypot(zx, zy, zz); zx /= zl; zy /= zl; zz /= zl;
+      let xx = -zy * 0 + 1 * zz, xy = zx * 0 - 0 * zz, xz = 0 * zy - zx * 1; /* up=(0,1,0) \u00d7 z */
+      xx = 1 * zz - 0 * zy; xy = 0 * zx - 0 * zz; xz = 0 * zy - 1 * zx;
+      let xl = Math.hypot(xx, xy, xz); xx /= xl; xy /= xl; xz /= xl;
+      const yx = zy * xz - zz * xy, yy = zz * xx - zx * xz, yz = zx * xy - zy * xx;
+      return new Float32Array([
+        xx, yx, zx, 0,
+        xy, yy, zy, 0,
+        xz, yz, zz, 0,
+        -(xx * ex + xy * ey + xz * ez), -(yx * ex + yy * ey + yz * ez), -(zx * ex + zy * ey + zz * ez), 1,
+      ]);
+    }
+    const uProj = gl.getUniformLocation(prog, "projectionMatrix");
+    const uMV = gl.getUniformLocation(prog, "modelViewMatrix");
+    const uTime = gl.getUniformLocation(prog, "time");
+    gl.uniformMatrix4fv(uMV, false, lookAt(0, 16, 125, 0, 28, 0));
+
+    gl.disable(gl.CULL_FACE);
+    gl.enable(gl.DEPTH_TEST);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+    gl.clearColor(0, 0, 0, 0);
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = Math.max(1, Math.floor(host.clientWidth * dpr));
+      const h = Math.max(1, Math.floor(host.clientHeight * dpr));
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w; canvas.height = h;
+        gl.viewport(0, 0, w, h);
+      }
+      gl.uniformMatrix4fv(uProj, false, perspective(Math.PI / 4, w / h, 1, 10000));
+    }
+    resize();
+    window.addEventListener("resize", resize);
+
+    let t = 0, last = performance.now(), frames = 0;
+    function render() {
+      frames++;
+      const now = performance.now();
+      const delta = Math.min(0.1, (now - last) / 1000);
+      last = now;
+      const r = host.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) return;
+      t += delta * 0.5;
+      gl.uniform1f(uTime, t);
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      gl.drawElements(gl.TRIANGLES, idx.length, ext ? gl.UNSIGNED_INT : gl.UNSIGNED_SHORT, 0);
+    }
+    let usingInterval = false;
+    function rafLoop() {
+      if (usingInterval) return;
+      render();
+      requestAnimationFrame(rafLoop);
+    }
+    requestAnimationFrame(rafLoop);
+    setTimeout(function () {
+      if (frames === 0) { usingInterval = true; setInterval(render, 1000 / 60); }
+    }, 600);
+  };
+})();
+
+/* ============ EFEITOS TIPOGR\u00c1FICOS (inspira\u00e7\u00e3o neuemontreal) ============ */
+window.startTypeFx = (function () {
+  let started = false;
+  return function () {
+    if (started) return; started = true;
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* cursor-ponto */
+    const dot = document.getElementById("cursorDot");
+    if (dot && !reduce) {
+      document.addEventListener("mousemove", function (e) {
+        dot.classList.add("on");
+        dot.style.left = e.clientX + "px";
+        dot.style.top = e.clientY + "px";
+      }, { passive: true });
+      document.addEventListener("mouseover", function (e) {
+        dot.classList.toggle("big", !!(e.target.closest && e.target.closest("a, button, .row, .filter, .cta")));
+      });
+      document.addEventListener("mouseleave", function () { dot.classList.remove("on"); });
+    }
+
+    /* manifesto: embrulha palavras preservando o <b> */
+    const mp = document.getElementById("manifestoP");
+    const words = [];
+    if (mp) {
+      function wrapWords(node) {
+        Array.prototype.slice.call(node.childNodes).forEach(function (ch) {
+          if (ch.nodeType === 3) {
+            const frag = document.createDocumentFragment();
+            ch.textContent.split(/(\s+)/).forEach(function (tk) {
+              if (/^\s+$/.test(tk) || tk === "") { frag.appendChild(document.createTextNode(tk)); }
+              else { const sp = document.createElement("span"); sp.className = "w"; sp.textContent = tk; frag.appendChild(sp); words.push(sp); }
+            });
+            node.replaceChild(frag, ch);
+          } else if (ch.nodeType === 1) { wrapWords(ch); }
+        });
+      }
+      wrapWords(mp);
+      if (reduce) words.forEach(function (w) { w.classList.add("on"); });
+    }
+    function scrub() {
+      if (!mp || reduce || !words.length) return;
+      const r = mp.getBoundingClientRect();
+      const pr = (window.innerHeight * 0.9 - r.top) / (r.height + window.innerHeight * 0.45);
+      const n = Math.floor(words.length * Math.max(0, Math.min(1, pr)) * 1.15);
+      for (let i = 0; i < words.length; i++) words[i].classList.toggle("on", i < n);
+    }
+
+    /* marquee: envergadura pela velocidade do scroll */
+    const mq = document.querySelector(".marquee");
+    let lastY = window.scrollY, skew = 0;
+    function tick() {
+      scrub();
+      if (mq && !reduce) {
+        const v = window.scrollY - lastY; lastY = window.scrollY;
+        const target = Math.max(-6, Math.min(6, v * 0.35));
+        skew += (target - skew) * 0.25;
+        mq.style.transform = "skewX(" + skew.toFixed(2) + "deg)";
+      }
+    }
+    window.addEventListener("scroll", tick, { passive: true });
+    setInterval(tick, 90);
+    tick();
+  };
+})();
+
+/* ============ EFEITOS PACOTE 2: count-up, parallax, magn\u00e9tico, scramble, letras, progresso ============ */
+window.startMoreFx = (function () {
+  let started = false;
+  return function () {
+    if (started) return; started = true;
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    /* 1. stats: n\u00fameros contam ao entrar na tela */
+    const stats = Array.prototype.slice.call(document.querySelectorAll(".stat .n")).map(function (el) {
+      const m = el.textContent.match(/^(\d+)(.*)$/);
+      return m ? { el: el, end: +m[1], suf: m[2], done: false } : null;
+    }).filter(Boolean);
+    function runCount(st) {
+      st.done = true;
+      if (reduce) { st.el.textContent = st.end + st.suf; return; }
+      const t0 = performance.now();
+      const id = setInterval(function () {
+        const k = Math.min(1, (performance.now() - t0) / 950);
+        const ease = 1 - Math.pow(1 - k, 3);
+        st.el.textContent = Math.round(st.end * ease) + st.suf;
+        if (k >= 1) clearInterval(id);
+      }, 30);
+    }
+
+    /* 2. sec-labels: efeito "decodificar" ao entrar na tela */
+    const CHARS = "ABCDEFGHIKLMNOPRSTUVXZ\u00b7\u2014\u2197";
+    const labels = Array.prototype.slice.call(document.querySelectorAll(".sec-label")).map(function (el) {
+      const node = el.firstChild;
+      if (!node || node.nodeType !== 3 || !node.textContent.trim()) return null;
+      return { el: el, node: node, final: node.textContent, done: false };
+    }).filter(Boolean);
+    function runScramble(lb) {
+      lb.done = true;
+      if (reduce) return;
+      const t0 = performance.now(), dur = 650, txt = lb.final;
+      const id = setInterval(function () {
+        const k = Math.min(1, (performance.now() - t0) / dur);
+        let out = "";
+        for (let i = 0; i < txt.length; i++) {
+          if (txt[i] === " ") { out += " "; continue; }
+          out += (i / txt.length < k) ? txt[i] : CHARS[Math.floor(Math.random() * CHARS.length)];
+        }
+        lb.node.textContent = out;
+        if (k >= 1) { lb.node.textContent = txt; clearInterval(id); }
+      }, 40);
+    }
+
+    /* 3. letras interativas no "VAMOS ESCALAR?" */
+    const fh2 = document.querySelector(".final h2");
+    if (fh2) {
+      Array.prototype.slice.call(fh2.childNodes).forEach(function (ch) {
+        if (ch.nodeType !== 3 || !ch.textContent.trim()) return;
+        const frag = document.createDocumentFragment();
+        ch.textContent.split("").forEach(function (c) {
+          if (c === " ") { frag.appendChild(document.createTextNode(" ")); return; }
+          const sp = document.createElement("span");
+          sp.className = "ltr"; sp.textContent = c;
+          frag.appendChild(sp);
+        });
+        fh2.replaceChild(frag, ch);
+      });
+    }
+
+    /* 4. CTA magn\u00e9tico + 5. parallax + 6. barra de progresso \u2014 no mesmo tick */
+    const cta = document.querySelector("header .cta");
+    const h1 = document.querySelector(".hero h1");
+    const hills = document.getElementById("hillsfx");
+    const bar = document.getElementById("scrollbarFx");
+    let mx = -9999, my = -9999;
+    document.addEventListener("mousemove", function (e) { mx = e.clientX; my = e.clientY; }, { passive: true });
+
+    function tick2() {
+      /* count-up e scramble quando vis\u00edveis */
+      for (const st of stats) {
+        if (!st.done) { const r = st.el.getBoundingClientRect(); if (r.top < innerHeight * 0.92 && r.bottom > 0) runCount(st); }
+      }
+      for (const lb of labels) {
+        if (!lb.done) { const r = lb.el.getBoundingClientRect(); if (r.top < innerHeight * 0.94 && r.bottom > 0) runScramble(lb); }
+      }
+      /* progresso de leitura */
+      if (bar) {
+        const max = document.documentElement.scrollHeight - innerHeight;
+        bar.style.width = (max > 0 ? Math.min(100, (scrollY / max) * 100) : 0) + "%";
+      }
+      if (reduce) return;
+      /* parallax do hero */
+      if (h1 && scrollY < innerHeight * 1.4) {
+        h1.style.transform = "translateY(" + (scrollY * 0.16).toFixed(1) + "px)";
+        if (hills) hills.style.transform = "translateY(" + (scrollY * 0.07).toFixed(1) + "px)";
+      }
+      /* CTA magn\u00e9tico */
+      if (cta) {
+        const r = cta.getBoundingClientRect();
+        const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        const dx = mx - cx, dy = my - cy;
+        const dist = Math.hypot(dx, dy);
+        if (dist < 130) {
+          cta.style.transform = "translate(" + (dx * 0.22).toFixed(1) + "px," + (dy * 0.22).toFixed(1) + "px) scale(1.04)";
+        } else if (cta.style.transform) {
+          cta.style.transform = "";
+        }
+      }
+    }
+    window.addEventListener("scroll", tick2, { passive: true });
+    document.addEventListener("mousemove", tick2, { passive: true });
+    setInterval(tick2, 90);
+    tick2();
+
+    /* 7. preview flutuante dos trabalhos */
+    const pv = document.getElementById("workPv");
+    const wrows = document.getElementById("workRows");
+    if (pv && wrows && !reduce) {
+      wrows.addEventListener("mouseover", function (e) {
+        const row = e.target.closest("[data-pv]");
+        if (!row) return;
+        const parts = row.getAttribute("data-pv").split("|");
+        pv.style.background = "linear-gradient(135deg, #" + parts[0] + ", #" + parts[0] + " 55%, #" + parts[1] + "33)";
+        pv.style.color = "#" + parts[1];
+        pv.textContent = parts[2];
+        pv.classList.add("on");
+      });
+      wrows.addEventListener("mouseleave", function () { pv.classList.remove("on"); });
+      wrows.addEventListener("mousemove", function (e) {
+        pv.style.left = (e.clientX + 130) + "px";
+        pv.style.top = e.clientY + "px";
+      }, { passive: true });
+    }
+  };
+})();
+
+/* ============ DIRECT DO INSTAGRAM com mensagem pronta na \u00e1rea de transfer\u00eancia ============ */
+(function () {
+  const DM_MSG = "Ol\u00e1! Vi o site da BrandScale e gostaria de saber como voc\u00eas trabalham \u1f60a";
+  let toastEl = null, toastTimer = null;
+  function showCopyToast(txt) {
+    if (!toastEl) {
+      toastEl = document.createElement("div");
+      toastEl.className = "copy-toast";
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = txt;
+    requestAnimationFrame(function () { toastEl.classList.add("show"); });
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 3400);
+  }
+  document.addEventListener("click", function (e) {
+    const a = e.target.closest("[data-dm]");
+    if (!a) return;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(DM_MSG);
+        showCopyToast("Mensagem copiada \u2014 \u00e9 s\u00f3 colar no direct \u1f609");
+      }
+    } catch (err) { /* clipboard bloqueado: o direct abre normalmente */ }
+  });
+})();
+
+/* ============ reveal on scroll (sem depender de IntersectionObserver) ============ */
+function revealInit() {
+  const els = Array.prototype.slice.call(document.querySelectorAll("[data-rv]"));
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    els.forEach(function (el) { el.classList.add("in"); });
+    return;
+  }
+  function check() {
+    for (let i = els.length - 1; i >= 0; i--) {
+      const el = els[i];
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.92 && r.bottom > 0) {
+        el.classList.add("in");
+        els.splice(i, 1);
+      }
+    }
+  }
+  window.addEventListener("scroll", check, { passive: true });
+  window.addEventListener("wheel", check, { passive: true });
+  window.addEventListener("touchmove", check, { passive: true });
+  window.addEventListener("resize", check);
+  setInterval(check, 400); /* cobre ambientes que suspendem eventos de scroll */
+  check();
+  /* failsafe: conte\u00fado jamais fica invis\u00edvel \u2014 ap\u00f3s 5s revela tudo */
+  setTimeout(function () {
+    els.slice().forEach(function (el) { el.classList.add("in"); });
+    els.length = 0;
+  }, 5000);
+}
+</script>
+</body>
+</html>
